@@ -135,6 +135,43 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* WHY FREEZE-DRIED */}
+      <section className="px-6 md:px-16 py-16" style={{ backgroundColor: palette.surface }}>
+        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Why Freeze-Dried?</h2>
+        <div className="grid md:grid-cols-4 gap-8 text-center">
+          {[
+            { icon: "🌿", title: "98% Nutrients", desc: "Retains up to 98% of nutrients from fresh foods" },
+            { icon: "📅", title: "Long Shelf Life", desc: "Stays fresh for 6–12 months without preservatives" },
+            { icon: "🚫", title: "No Additives", desc: "Zero preservatives, added sugar, or artificial ingredients" },
+            { icon: "♻️", title: "Eco-Friendly", desc: "Reduces food waste and uses sustainable packaging" },
+          ].map((item) => (
+            <div key={item.title} className="p-6 rounded-2xl border transition hover:shadow-lg" style={{ borderColor: palette.border }}>
+              <div className="text-4xl mb-3">{item.icon}</div>
+              <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+              <p className="text-sm" style={{ color: palette.subtext }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SUSTAINABILITY & QUALITY */}
+      <section className="px-6 md:px-16 py-16">
+        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Sustainability & Quality</h2>
+        <div className="grid md:grid-cols-3 gap-8 text-center">
+          {[
+            { icon: "🌱", title: "Eco-Friendly Packaging", desc: "Compostable materials and minimal waste design" },
+            { icon: "🇪🇺", title: "EU-Sourced Ingredients", desc: "Premium organic ingredients from European farms" },
+            { icon: "💚", title: "Health & Wellness", desc: "Designed for optimal nutrition and clean eating" },
+          ].map((item) => (
+            <div key={item.title} className="p-8 rounded-2xl border transition hover:shadow-lg" style={{ borderColor: palette.border, backgroundColor: palette.surface }}>
+              <div className="text-4xl mb-4">{item.icon}</div>
+              <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
+              <p style={{ color: palette.subtext }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
       <section className="px-6 md:px-16 py-16" style={{ backgroundColor: palette.surface }}>
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">How It Works</h2>
@@ -185,6 +222,21 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="px-6 md:px-16 py-16" style={{ backgroundColor: palette.surface }}>
+        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Frequently Asked Questions</h2>
+        <div className="max-w-3xl mx-auto space-y-4">
+          {[
+            { q: "How do I prepare freeze-dried meals?", a: "Simply add hot water and wait 5-10 minutes for soups, or cold water/milk for smoothies. For risotto packs, add to rice or pasta while cooking." },
+            { q: "How long do they last?", a: "Our freeze-dried products maintain peak quality for 6-12 months when stored in a cool, dry place. No refrigeration needed!" },
+            { q: "Are they safe for kids?", a: "Absolutely! Our SMART KIDS range is specifically designed for children with organic ingredients and kid-friendly flavors." },
+            { q: "Why are they healthier than alternatives?", a: "Freeze-drying preserves 98% of nutrients without preservatives, additives, or added sugar. It's the closest you can get to fresh food in convenient form." },
+          ].map((faq, index) => (
+            <FAQItem key={index} question={faq.q} answer={faq.a} palette={palette} />
+          ))}
+        </div>
+      </section>
+
       {/* FINAL CTA */}
       <section className="text-center py-16">
         <h2 className="text-3xl md:text-4xl font-semibold mb-4">Ready for a smarter way to eat?</h2>
@@ -230,6 +282,37 @@ function ProductCard({
           {cta}
         </a>
       </div>
+    </div>
+  );
+}
+
+function FAQItem({
+  question,
+  answer,
+  palette,
+}: {
+  question: string;
+  answer: string;
+  palette: typeof palette;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border rounded-2xl" style={{ borderColor: palette.border }}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full p-6 text-left flex justify-between items-center hover:bg-white/20 transition-colors"
+      >
+        <h3 className="font-semibold">{question}</h3>
+        <span className="text-xl" style={{ color: palette.accent }}>
+          {isOpen ? "−" : "+"}
+        </span>
+      </button>
+      {isOpen && (
+        <div className="px-6 pb-6">
+          <p style={{ color: palette.subtext }}>{answer}</p>
+        </div>
+      )}
     </div>
   );
 }
