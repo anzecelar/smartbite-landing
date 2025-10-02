@@ -1,8 +1,17 @@
 import { NextResponse } from "next/server";
 
+interface WaitlistRequestBody {
+  email: string;
+}
+
+interface SupabaseErrorResponse {
+  message?: string;
+  hint?: string;
+}
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json().catch(() => ({} as any));
+    const body: WaitlistRequestBody = await req.json().catch(() => ({} as WaitlistRequestBody));
     const email: string | undefined = body?.email;
     if (!email || !/.+@.+\..+/.test(email)) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
@@ -35,7 +44,7 @@ export async function POST(req: Request) {
     console.log("[waitlist] Supabase status:", sbRes.status, "body:", text);
 
     if (!sbRes.ok) {
-      let data: any = {};
+      let data: SupabaseErrorResponse = {};
       try { data = JSON.parse(text); } catch {}
       const msg = data?.message || data?.hint || text || "Supabase error";
       return NextResponse.json({ error: msg }, { status: sbRes.status });

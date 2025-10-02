@@ -5,7 +5,17 @@ import { useState } from "react";
 import Image from "next/image";
 
 // ===== Brand Theme (muted, low-contrast) =====
-const palette = {
+interface Palette {
+  bg: string;
+  surface: string;
+  text: string;
+  subtext: string;
+  accent: string;
+  accentSoft: string;
+  border: string;
+}
+
+const palette: Palette = {
   bg: "#F2EADF", // warm sand
   surface: "#FBF8F3", // soft ivory
   text: "#3B3B3B", // soft charcoal
@@ -293,7 +303,7 @@ function FAQItem({
 }: {
   question: string;
   answer: string;
-  palette: typeof palette;
+  palette: Palette;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -320,7 +330,7 @@ function FAQItem({
 function Footer({
   palette,
 }: {
-  palette: typeof palette;
+  palette: Palette;
 }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -363,7 +373,7 @@ function Footer({
               className="px-4 py-3 rounded-2xl w-full border"
               style={{ borderColor: palette.border, backgroundColor: palette.surface }}
             />
-            <button type="submit" disabled={status === "loading" as any} className="px-5 py-3 rounded-2xl font-medium transition hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60" style={{ backgroundColor: palette.accent, color: "#FFF" }}>
+            <button type="submit" disabled={status === "loading"} className="px-5 py-3 rounded-2xl font-medium transition hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60" style={{ backgroundColor: palette.accent, color: "#FFF" }}>
               {status === "loading" ? "Joining..." : "Subscribe"}
             </button>
           </form>
